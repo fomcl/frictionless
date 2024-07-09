@@ -225,7 +225,7 @@ homepage: http://s0mgpc0003g.cbsp.nl:5000/api/v1/plannen/testplan5/geschiedenis?
 contributors:
 - organization: SES - Sociaal-economisch totaalbeeld (CBS/SER)
   title: Roskam, A.J.R. (Albert-Jan)
-  email: ar.roskam@cbs.nl
+  email: noreply@cbs.nl
   role: Software Ontwikkelaar
 created: 20240620T11:58:31
 profile: tabular-data-package
