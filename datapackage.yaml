@@ -1,0 +1,234 @@
+name: testplan5
+description: Export van analyseplan 'testplan5' uit het Yippie™ systeem
+resources:
+- name: deleteme
+  path:
+  - deleteme/data/soortobjectnummer=B/data_0.parquet
+  - deleteme/data/soortobjectnummer=B/data_1.parquet
+  - deleteme/data/soortobjectnummer=B/data_2.parquet
+  - deleteme/data/soortobjectnummer=B/data_3.parquet
+  - deleteme/data/soortobjectnummer=D/data_0.parquet
+  - deleteme/data/soortobjectnummer=D/data_1.parquet
+  - deleteme/data/soortobjectnummer=D/data_2.parquet
+  - deleteme/data/soortobjectnummer=D/data_3.parquet
+  - deleteme/data/soortobjectnummer=H/data_0.parquet
+  - deleteme/data/soortobjectnummer=H/data_1.parquet
+  - deleteme/data/soortobjectnummer=H/data_2.parquet
+  - deleteme/data/soortobjectnummer=H/data_3.parquet
+  - deleteme/data/soortobjectnummer=O/data_0.parquet
+  - deleteme/data/soortobjectnummer=O/data_1.parquet
+  - deleteme/data/soortobjectnummer=O/data_2.parquet
+  - deleteme/data/soortobjectnummer=O/data_3.parquet
+  schema:
+    fields:
+    - name: rinpersoons
+      type: string
+      title: Samen met RINPERSOON identificeert dit nummer de persoon
+      description: |-
+        In de meeste gevallen is de bron van de persoon-id het gemeentelijk
+        bevolkingsregister.
+      constraints:
+        required: true
+      categories:
+        resource: rinpersoons
+        valueField: code
+        valueLabel: label
+      path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/BestandenDSC/Omschrijvingen/Variabelen/RINPERSOONS.OMS
+    - name: rinpersoon
+      type: string
+      title: Samen met RINPERSOONS identificeert dit nummer de persoon
+      description: |-
+        Samen met de indicator voor de oorsprong van persoon-id identificeert dit
+        nummer een uniek natuurlijk persoon.
+
+        In de meeste gevallen gaat het om een omzetting van het A-nummer uit de
+        gemeentelijke bevolkingsregisters. Omdat het A-nummer zeer identificerend is,
+        wordt het voor toepassingen binnen het CBS (waaronder het uniek houden van aan
+        personen gerelateerde informatie en het koppelen van verschillende
+        registraties) vervangen door het RINPERSOON. RIN staat voor Record
+        Identification Number. Door de aan een RINPERSOON gekoppelde data in voldoende
+        mate te verwijderen of te hercoderen, is het feitelijk onmogelijk om een
+        RINPERSOON aan een specifiek persoon toe te rekenen. De omzetting van een
+        A-nummer naar een RINPERSOON geschiedt door het CBS.
+      constraints:
+        required: true
+      path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/BestandenDSC/Omschrijvingen/Variabelen/RINPERSOON.OMS
+    - name: gbadatumaanvangadreshouding
+      type: string
+      title: Datum aanvang adresbewoning persoon
+      description: |-
+        Een persoon die van adres verandert, geboren wordt of zich in Nederland vestigt
+        heeft als gebeurtenisdatum GBADATUMAANVANGADRESHOUDING.
+        Notatiewijze: JJJJMMDD
+
+        Datum zoals vastgelegd in de gemeentelijke bevolkingsregisters.
+      constraints:
+        required: true
+      path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/BestandenDSC/Omschrijvingen/Variabelen/GBADATUMAANVANGADRESHOUDING.OMS
+    - name: gbadatumeindeadreshouding
+      type: string
+      title: Datum beeïndiging adresbewoning persoon
+      description: |-
+        Indien een persoon van adres verandert, overlijdt of zich vestigt in het
+        buitenland dan wordt de GBADATUMEINDEADRESHOUDING van deze persoon gevuld met
+        de datum waarop deze gebeurtenis plaatsvond.
+        Als aan het eind van de waarnemingsperiode geen einde aan de adresbewoning is
+        gekomen dan is GBADATUMEINDEADRESHOUDING gevuld met 88888888 (= niet
+        beeindigd).
+
+        Notatiewijze: JJJJMMDD
+
+        Datum zoals vastgelegd in de gemeentelijke bevolkingsregisters.
+      constraints:
+        required: true
+      path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/BestandenDSC/Omschrijvingen/Variabelen/GBADATUMEINDEADRESHOUDING.OMS
+    - name: soortobjectnummer
+      type: string
+      title: SOORTOBJECTNUMMER van het adres van een persoon
+      description: |-
+        Het SOORTOBJECTNUMMER moet gebruikt worden in combinatie met RINOBJECTNUMMER.
+        Alleen dan vormt het een unieke sleutel. Het SOORTOBJECTNUMMER geeft de
+        herkomst van het RINOBJECTNUMMER weer.
+        Betekenis van de gebruikte coderingen:
+        B: RINOBJECTNUMMER met herkomst Basisregistratie Adressen en Gebouwen (BAG),
+        betreft objecten vanaf 1-1-2012 (vanaf die datum geldt deze registratie);
+        H: RINOBJECTNUMMER met historische herkomst, betreft objecten van vóór
+        1-1-2012, dus bijvoorbeeld objecten die voor die datum al gesloopt zijn;
+        D: RINOBJECTNUMMER met herkomst de gemeentelijke bevolkingsregisters, betreft
+        objecten die niet koppelen aan de BAG en niet tot de historische objecten
+        behoren;
+        O: RINOBJECTNUMMER met onbekende herkomst, betreft objecten waarvan door
+        ontbreken van aanvullende informatie de herkomst onduidelijk is.
+
+        De sleutelcombinatie SOORTOBJECTNUMMER + RINOBJECTNUMMER is op 1 juli 2014
+        geïntroduceerd in het SSB als vervanger van de adreskoppelsleutels RINADRES en
+        ADRESRUGNR. Aangezien er in een aantal gevallen sprake was van een n:m-relatie
+        tussen de nieuwe sleutel en de toenmalige sleutels, moesten hierin keuzes
+        worden gemaakt. De componenten die toen (juli 2014) in het SSB stonden (dus
+        niet in het archief) zijn omgezet naar de nieuwe sleutel en zijn uniek gemaakt
+        op de nieuwe sleutel ('ontdubbeld').
+
+        Met de variabele SOORTOBJECTNUMMER worden naast de reguliere BAG-objecten ook
+        historische verblijfsobjecten en niet in de Basisregistratie Adressen en
+        Gebouwen (BAG) geidentificeerde verblijfsobjecten aangeduid. Een geadresseerde
+        verblijfplaats kan een gebouw zijn, Verblijfsobject genoemd, maar ook een
+        caravan op een Standplaats of een woonboot op een Ligplaats. Een verblijfplaats
+        kan één of meerdere adressen bevatten.
+      categories:
+        resource: soortobjectnummer
+        valueField: code
+        valueLabel: label
+      path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/BestandenDSC/Omschrijvingen/Variabelen/SOORTOBJECTNUMMER.OMS
+    - name: rinobjectnummer
+      type: string
+      title: Adres-id van een persoon
+      description: |-
+        Aan historische adressen (niet meer bestaand op 1 januari 2012) is een fictief
+        RINOBJECTNUMMER toegekend.
+
+        Aan onbekende adressen is een fictief RINOBJECTNUMMER toegekend waarin de
+        gemeente-wijk-buurtcode (GWBCODEJJJJ) is opgenomen.
+
+        De sleutelcombinatie SOORTOBJECTNUMMER + RINOBJECTNUMMER is op 1 juli 2014
+        geïntroduceerd in het
+        SSB als vervanger van de adreskoppelsleutels RINADRES en ADRESRUGNR. Aangezien
+        er in een aantal gevallen sprake was van een n:m-relatie tussen de nieuwe
+        sleutel en de toenmalige sleutels, moesten hierin keuzes worden gemaakt. De
+        componenten die toen (juli 2014) in het SSB stonden (dus
+        niet in het archief) zijn omgezet naar de nieuwe sleutel en zijn uniek gemaakt
+        op de nieuwe sleutel ('ontdubbeld').
+
+        Dit versleutelde nummer identificeert de locatie van een (verblijfs)object
+        volgens de Basisregistratie Adressen en Gebouwen (BAG). Een geadresseerde
+        verblijfplaats kan een gebouw zijn, Verblijfsobject genoemd, maar ook een
+        caravan op een Standplaats of een woonboot op een Ligplaats. Een verblijfplaats
+        kan één of meerdere adressen bevatten.
+      path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/BestandenDSC/Omschrijvingen/Variabelen/RINOBJECTNUMMER.OMS
+    - name: release_aanduiding
+      type: string
+    - name: verkorte_schrijfwijze
+      type: string
+    - name: verslagperiode
+      type: string
+    - name: versie
+      type: string
+    - name: ssb_verslagperiode
+      type: string
+      title: Periode waarop het bestand betrekking heeft
+      description: |-
+        De periode waarop het bestand betrekking heeft.
+
+        Deze bevat in ieder geval het jaar. Hier kunnen kwartaal,
+        maand en/of dag eventueel aan worden toegevoegd. Een
+        bestand kan ook tijdloos zijn en dus geen periodeaanduiding
+        hebben. In dat geval is de waarde van ssb_verslagperiode leeg.
+    - name: ssb_versie
+      type: string
+      title: SSB versienummer van het bestand
+      description: |-
+        Het SSB versienummer van het bestand.
+
+        Wijzigingen aan het bestand zorgen altijd voor een hoger,
+        opvolgend versienummer. In het versienummer kan ook een
+        periodeaanduiding voorkomen. Bijvoorbeeld 061, wat betekent
+        dat de eerste versie van de periode t/m juni of bijvoorbeeld
+        20091, wat betekent de eerste versie van een periode t/m 2009.
+  format: parquet
+  hash: b3a71949eb12d906e79abf829ab93f4c
+  mediatype: application/vnd.apache.parquet
+  encoding: utf-8
+  profile: tabular-data-resource
+  sources:
+  - title: gbaadresobjectjjjjbusvv
+    path: http://s0mgpc0003g.cbsp.nl:5000/api/v1/data/gbaadresobjectjjjjbusvv/meta?formaat=yaml
+- name: rinpersoons
+  title: SSB codelijst voor rinpersoons
+  path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/Codeboeken/SSBRINPERSOONS.txt
+  schema:
+    fields:
+    - name: code
+      type: string
+    - name: label
+      type: string
+  format: csv
+  hash: f391577b9d02e6c32b08e7d9ed9b7644
+  mediatype: text/x-tilde-separated-values;header=absent
+  encoding: windows-1252
+  profile: tabular-data-resource
+  dialect:
+    delimiter: '~'
+    doubleQuote: false
+    lineTerminator: \r\n
+    quoteChar: ''
+    header: false
+- name: soortobjectnummer
+  title: SSB codelijst voor soortobjectnummer
+  path: //cbsp.nl/Productie/secundair/SSBStage_SEC1/Output/Codeboeken/SSBSOORTOBJECTNUMMER.TXT
+  schema:
+    fields:
+    - name: code
+      type: string
+    - name: label
+      type: string
+  format: csv
+  hash: aec7d9976cbecdd808d2ff246472761e
+  mediatype: text/x-tilde-separated-values;header=absent
+  encoding: windows-1252
+  profile: tabular-data-resource
+  dialect:
+    delimiter: '~'
+    doubleQuote: false
+    lineTerminator: \r\n
+    quoteChar: ''
+    header: false
+homepage: http://s0mgpc0003g.cbsp.nl:5000/api/v1/plannen/testplan5/geschiedenis?package_id=e5cdbae3-ce55-4347-9eba-0e69f395f3b9
+contributors:
+- organization: SES - Sociaal-economisch totaalbeeld (CBS/SER)
+  title: Roskam, A.J.R. (Albert-Jan)
+  email: ar.roskam@cbs.nl
+  role: Software Ontwikkelaar
+created: 20240620T11:58:31
+profile: tabular-data-package
+licenses:
+- name: CC-BY-4.0
+id: e5cdbae3-ce55-4347-9eba-0e69f395f3b9
